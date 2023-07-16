@@ -4,6 +4,7 @@ import sys
 
 import kendra_chat_anthropic as anthropic
 import kendra_chat_falconIns as flaconIns
+import Kendra_chat_starcoder as starcoder
 
 import kendra_chat_flan_xl as flanxl
 import kendra_chat_flan_xxl as flanxxl
@@ -19,6 +20,8 @@ PROVIDER_MAP = {
     'flanxl': 'Flan XL',
     'flanxxl': 'Flan XXL',
     'falconins': 'Falcon Inst.'
+    'starcoder': 'starchat beta'
+
 }
 
 # Check if the user ID is already stored in the session state
@@ -39,6 +42,9 @@ if 'llm_chain' not in st.session_state:
         if (sys.argv[1] == 'falconins'):
             st.session_state['llm_app'] = flaconIns
             st.session_state['llm_chain'] = flaconIns.build_chain()
+        if (sys.argv[1] == 'starcoder'):
+            st.session_state['llm_app'] = starcoder
+            st.session_state['llm_chain'] = starcoder.build_chain()
         elif (sys.argv[1] == 'flanxl'):
             st.session_state['llm_app'] = flanxl
             st.session_state['llm_chain'] = flanxl.build_chain()
@@ -51,7 +57,7 @@ if 'llm_chain' not in st.session_state:
         else:
             raise Exception("Unsupported LLM: ", sys.argv[1])
     else:
-        raise Exception("Usage: streamlit run app.py <anthropic|flanxl|flanxxl|openai|falconIns>")
+        raise Exception("Usage: streamlit run app.py <anthropic|flanxl|flanxxl|openai|falconIns|starcoder>")
 
 if 'chat_history' not in st.session_state:
     st.session_state['chat_history'] = []
@@ -202,4 +208,4 @@ with st.container():
     write_chat_message(a, q)
 
 st.markdown('---')
-input = st.text_input("You are talking to an AI, ask any question.", key="input", on_change=handle_input)
+input = st.text_input("You are talking to a Network_Genius: I execute your Intents for network operations: Fulfilment and Assurance.", key="input", on_change=handle_input)
